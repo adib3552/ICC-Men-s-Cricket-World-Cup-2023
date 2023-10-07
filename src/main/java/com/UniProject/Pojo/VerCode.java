@@ -1,4 +1,4 @@
-package com.UniProject.Entities;
+package com.UniProject.Pojo;
 
 public class VerCode {
     private int code;

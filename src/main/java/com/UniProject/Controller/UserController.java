@@ -1,8 +1,8 @@
 package com.UniProject.Controller;
 
-import com.UniProject.Entities.LoginDetails;
+import com.UniProject.Pojo.LoginDetails;
 import com.UniProject.Entities.User;
-import com.UniProject.Entities.VerCode;
+import com.UniProject.Pojo.VerCode;
 import com.UniProject.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +18,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/profile/{email}")
-    public User getUser(@PathVariable("email") String email){
-        return userService.getUser(email);
-    }
 
     @PostMapping("/login")
     public ResponseEntity<String>userLogin(@RequestBody LoginDetails info){
@@ -38,13 +34,18 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("wrong email or password");
     }
 
-
-    @GetMapping("/verify/{email}")
-    public ResponseEntity<String> sendEmail(@PathVariable String email){
-        userEmail=email;
-        code=userService.getVerCode(email);
-        System.out.println(code);
-        return ResponseEntity.status(HttpStatus.OK).body("Sent");
+    @PostMapping("/save")
+    public ResponseEntity<String> saveUser(@RequestBody User user) {
+        if (!userService.checkForDuplicateEmail(user.getEmail())) {
+            // Redirect back to the form with an error message
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already exist try another email");
+        }
+        user.setEnabled(false);
+        int code = userService.saveUser(user);
+        if(code==1){
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Information saved Successfully");
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while saving");
     }
 
     @PostMapping("/check")
@@ -57,17 +58,16 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Wrong verification code");
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<String> saveUser(@RequestBody User user) {
-        if (!userService.checkForDuplicateEmail(user.getEmail())) {
-            // Redirect back to the form with an error message
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already exist try another email");
-        }
-        user.setEnabled(false);
-       int code = userService.saveUser(user);
-        if(code==1){
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Information saved Successfully");
-        }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while saving");
+    @GetMapping("/verify/{email}")
+    public ResponseEntity<String> sendEmail(@PathVariable String email){
+        userEmail=email;
+        code=userService.getVerCode(email);
+        System.out.println(code);
+        return ResponseEntity.status(HttpStatus.OK).body("Sent");
+    }
+
+    @GetMapping("/profile/{email}")
+    public User getUser(@PathVariable("email") String email){
+        return userService.getUser(email);
     }
 }

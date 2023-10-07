@@ -1,11 +1,16 @@
 package com.UniProject.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.util.List;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,25 +21,17 @@ public class User {
     private String password;
     private long phone_no;
     private boolean isEnabled;
-
+    @ManyToMany
+    @JoinTable(name = "dream11",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "player_id"))
+    private List<Player>dream11;
     public boolean isEnabled() {
         return isEnabled;
     }
 
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
-    }
-
-    public User() {
-    }
-
-    public User(long id, String first_name, String last_name, String email, String password, long phone_no) {
-        this.id = id;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.email = email;
-        this.password = password;
-        this.phone_no = phone_no;
     }
 
     public long getId() {
@@ -85,15 +82,11 @@ public class User {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", phone_no=" + phone_no +
-                '}';
+    public List<Player> getDream11() {
+        return dream11;
+    }
+
+    public void setDream11(List<Player> dream11) {
+        this.dream11 = dream11;
     }
 }
