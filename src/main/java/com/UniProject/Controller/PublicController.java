@@ -1,24 +1,18 @@
 package com.UniProject.Controller;
 
-import com.UniProject.Entities.MatchInfo;
-import com.UniProject.Entities.Team;
+import com.UniProject.DTO.MatchDto;
+import com.UniProject.Enteties.MatchInfo;
+import com.UniProject.Enteties.Team;
 import com.UniProject.ExternalApi.News;
-import com.UniProject.Pojo.Story;
+import com.UniProject.DTO.Story;
 import com.UniProject.Services.MatchService;
 import com.UniProject.Services.TeamService;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.List;
 
 @RestController
@@ -40,7 +34,7 @@ public class PublicController {
     }
 
     @GetMapping("/matches")
-    public List<MatchInfo>showAllMatches(){
+    public List<MatchDto>showAllMatches(){
         return matchService.getAllMatch();
     }
     @GetMapping("/team")

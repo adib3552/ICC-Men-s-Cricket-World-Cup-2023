@@ -1,6 +1,6 @@
 package com.UniProject.ExternalApi;
 
-import com.UniProject.Pojo.Story;
+import com.UniProject.DTO.Story;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.json.JSONArray;

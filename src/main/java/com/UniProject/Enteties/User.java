@@ -1,4 +1,4 @@
-package com.UniProject.Entities;
+package com.UniProject.Enteties;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

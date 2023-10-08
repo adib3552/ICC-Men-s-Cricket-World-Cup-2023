@@ -1,4 +1,4 @@
-package com.UniProject.Pojo;
+package com.UniProject.DTO;
 
 import lombok.*;
 
@@ -9,5 +9,5 @@ import lombok.*;
 @Setter
 public class Story {
     private String hline;
-    private String inro;
+    private String intro;
 }

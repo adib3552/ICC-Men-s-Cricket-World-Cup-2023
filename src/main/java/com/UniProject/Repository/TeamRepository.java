@@ -1,6 +1,6 @@
 package com.UniProject.Repository;
 
-import com.UniProject.Entities.Team;
+import com.UniProject.Enteties.Team;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
@@ -14,4 +14,5 @@ public interface TeamRepository extends CrudRepository<Team,Long> {
     List<String>getAllTeamName();
 
     Team findByName(String name);
+
 }

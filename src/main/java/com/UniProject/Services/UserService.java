@@ -1,6 +1,6 @@
 package com.UniProject.Services;
 
-import com.UniProject.Entities.User;
+import com.UniProject.Enteties.User;
 import com.UniProject.Repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.UniProject.Repository;
 
-import com.UniProject.Entities.User;
+import com.UniProject.Enteties.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

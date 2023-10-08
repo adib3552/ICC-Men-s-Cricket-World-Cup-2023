@@ -1,5 +1,6 @@
-package com.UniProject.Entities;
+package com.UniProject.Enteties;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,9 @@ public class Team {
     private String name;
     @OneToMany(mappedBy = "team_name")
     private List<Player> team_player;
-
+    @ManyToOne
+    @Transient
+    private MatchInfo matchId;
     private int score;
 
     public long getTid() {
@@ -51,5 +54,13 @@ public class Team {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public MatchInfo getMatchId() {
+        return matchId;
+    }
+
+    public void setMatchId(MatchInfo matchId) {
+        this.matchId = matchId;
     }
 }

@@ -1,4 +1,4 @@
-package com.UniProject.Entities;
+package com.UniProject.Enteties;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,6 +24,26 @@ public class Player {
 
     @ManyToMany(mappedBy = "dream11")
     private List<User>dream11;
+    private int wickets;
+    private String role;
+    @Transient
+    private String tname;
+
+    public List<User> getDream11() {
+        return dream11;
+    }
+
+    public void setDream11(List<User> dream11) {
+        this.dream11 = dream11;
+    }
+
+    public int getWickets() {
+        return wickets;
+    }
+
+    public void setWickets(int wickets) {
+        this.wickets = wickets;
+    }
 
     public long getPid() {
         return pid;
@@ -65,4 +85,19 @@ public class Player {
         this.team_name = team_name;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getTname() {
+        return tname;
+    }
+
+    public void setTname(String tname) {
+        this.tname = tname;
+    }
 }

@@ -1,8 +1,8 @@
 package com.UniProject.Controller;
 
-import com.UniProject.Pojo.LoginDetails;
-import com.UniProject.Entities.User;
-import com.UniProject.Pojo.VerCode;
+import com.UniProject.DTO.LoginDetails;
+import com.UniProject.Enteties.User;
+import com.UniProject.DTO.VerCode;
 import com.UniProject.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
