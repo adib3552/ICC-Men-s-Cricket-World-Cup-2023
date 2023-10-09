@@ -1,12 +1,13 @@
 package com.UniProject.Controller;
 
-import com.UniProject.DTO.MatchDto;
+import com.UniProject.DTO.*;
 import com.UniProject.Enteties.MatchInfo;
 import com.UniProject.Enteties.Team;
 import com.UniProject.ExternalApi.News;
-import com.UniProject.DTO.Story;
 import com.UniProject.Services.MatchService;
+import com.UniProject.Services.PlayerService;
 import com.UniProject.Services.TeamService;
+import com.UniProject.Services.VenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,12 @@ public class PublicController {
     @Autowired
     private TeamService teamService;
 
+    @Autowired
+    private PlayerService playerService;
+
+    @Autowired
+    private VenueService venueService;
+
     @GetMapping("/news")
     public List<Story>showNews(){
         return news.getStoryList();
@@ -37,12 +44,24 @@ public class PublicController {
     public List<MatchDto>showAllMatches(){
         return matchService.getAllMatch();
     }
-    @GetMapping("/team")
-    public List<String>showAllTeamName(){
-        return teamService.showAllTeamName();
+    @GetMapping("/teams")
+    public List<TeamDto>showAllTeamName(){
+        return teamService.showAllTeam();
     }
-    @GetMapping("/team/{name}")
-    public Team showTeamByName(@PathVariable String name){
-        return teamService.showTeamInfoByName(name);
+    @GetMapping("/teams/{name}")
+    public TeamDto showTeamByName(@PathVariable String name){
+        return teamService.getTeamInfoByName(name);
+    }
+    @GetMapping("/players")
+    public List<PlayerDto>showAllPlayer(){
+        return playerService.getAllPlayer();
+    }
+    @GetMapping("/players/{pname}")
+    public PlayerDto showOnePlayer(@PathVariable String pname){
+        return playerService.getPlayerByName(pname);
+    }
+    @GetMapping("/venue/{vname}")
+    public VenueDto showVenueByName(@PathVariable String vname){
+        return venueService.getVenueByName(vname);
     }
 }

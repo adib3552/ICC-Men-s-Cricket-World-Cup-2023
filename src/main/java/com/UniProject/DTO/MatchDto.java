@@ -18,17 +18,5 @@ public class MatchDto {
     private String winning_team;
     private List<TeamDto>teamsPlaying;
     private VenueDto venue;
-    private String team1;
-    private String team2;
-    private String vname;
 
-    public MatchInfo getMatchInfo(){
-        MatchInfo matchInfo=new MatchInfo();
-        matchInfo.setMatch_date_time(this.match_date_time);
-        matchInfo.setTeam1(this.team1);
-        matchInfo.setTeam2(this.team2);
-        matchInfo.setVname(vname);
-
-        return matchInfo;
-    }
 }

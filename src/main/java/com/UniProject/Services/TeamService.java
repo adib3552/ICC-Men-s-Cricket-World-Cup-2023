@@ -1,5 +1,7 @@
 package com.UniProject.Services;
 
+import com.UniProject.DTO.DtoImpl;
+import com.UniProject.DTO.TeamDto;
 import com.UniProject.Enteties.Team;
 import com.UniProject.Repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,15 @@ public class TeamService {
     @Autowired
     public TeamRepository teamRepository;
 
-    public List<String>showAllTeamName(){
-        return teamRepository.getAllTeamName();
-    }
+    @Autowired
+    DtoImpl dto;
 
+    public List<TeamDto>showAllTeam(){
+        return dto.convertTeamListToDto((List<Team>) teamRepository.findAll());
+    }
+    public TeamDto getTeamInfoByName(String name){
+        return dto.convertTeamToDto(teamRepository.findByName(name));
+    }
     public Team showTeamInfoByName(String name){
         return teamRepository.findByName(name);
     }

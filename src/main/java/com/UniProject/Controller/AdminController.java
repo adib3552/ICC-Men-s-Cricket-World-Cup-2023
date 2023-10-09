@@ -1,5 +1,6 @@
 package com.UniProject.Controller;
 
+import com.UniProject.DTO.Match;
 import com.UniProject.Enteties.MatchInfo;
 import com.UniProject.Enteties.Player;
 import com.UniProject.Enteties.Team;
@@ -55,7 +56,7 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong");
     }
     @PostMapping("/match")
-    public ResponseEntity<String>addMatch(@RequestBody MatchDto match){
+    public ResponseEntity<String>addMatch(@RequestBody Match match){
         Team t1=teamService.showTeamInfoByName(match.getTeam1());
         Team t2=teamService.showTeamInfoByName(match.getTeam2());
         Venue v=venueService.showVenueByName(match.getVname());

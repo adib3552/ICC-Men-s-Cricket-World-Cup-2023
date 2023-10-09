@@ -15,6 +15,7 @@ public class TeamDto {
 
     private long tid;
     private String name;
-    private List<PlayerDto> team_player;
-    private MatchDto matchId;
+    private int score;
+    private List<PlayerWithoutTeamDto> team_player;
+    //private MatchDto matchId;
 }

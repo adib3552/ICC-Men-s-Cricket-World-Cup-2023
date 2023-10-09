@@ -12,5 +12,5 @@ public class VenueDto {
     private long vid;
     private String name;
     private String Stadium;
-    private MatchDto matchId;
+    //private MatchDto matchId;
 }
