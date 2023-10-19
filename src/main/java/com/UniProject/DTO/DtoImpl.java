@@ -145,4 +145,20 @@ public class DtoImpl {
         return playerDto;
     }
 
+    public List<TeamDtoWithoutPlayer>convertTeamListToTeamDtoWithoutPlayerList(List<Team> teams){
+        List<TeamDtoWithoutPlayer>teamDtoList=new ArrayList<>();
+
+        for(Team team:teams){
+            TeamDtoWithoutPlayer teamDto=new TeamDtoWithoutPlayer();
+
+            teamDto.setTid(team.getTid());
+            teamDto.setName(team.getName());
+            teamDto.setScore(team.getScore());
+
+            teamDtoList.add(teamDto);
+        }
+
+        return teamDtoList;
+    }
+
 }

@@ -34,6 +34,10 @@ public class TeamService {
         return teamRepository.save(dto.convertTeamDtoWithoutPlayerToTeam(teamDto));
     }
 
+    public List<TeamDtoWithoutPlayer>showScoreBoard(){
+        return dto.convertTeamListToTeamDtoWithoutPlayerList(teamRepository.getTeamByScore());
+    }
+
     @Transactional
     public boolean updateTeamName(TeamDtoWithoutPlayer team){
         try{

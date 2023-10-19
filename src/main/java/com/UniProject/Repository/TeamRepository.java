@@ -16,6 +16,8 @@ public interface TeamRepository extends CrudRepository<Team,Long> {
     List<String>getAllTeamName();
 
     Team findByName(String name);
+    @Query("select t from Team t order by t.score DESC")
+    List<Team>getTeamByScore();
 
     @Modifying
     @Query("update Team t set t.name=:name where t.tid=:tid")

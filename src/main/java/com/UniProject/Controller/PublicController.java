@@ -62,4 +62,8 @@ public class PublicController {
     public VenueDto showVenueByName(@PathVariable String vname){
         return venueService.getVenueByName(vname);
     }
+    @GetMapping("/scoreboard")
+    public List<TeamDtoWithoutPlayer>showScoreBoard(){
+        return teamService.showScoreBoard();
+    }
 }
