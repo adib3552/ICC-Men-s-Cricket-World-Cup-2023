@@ -102,6 +102,13 @@ public class AdminController {
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong");
     }
+    @PutMapping("/player/update-player-point")
+    public ResponseEntity<String>updatePlayerPoint(@RequestBody PlayerWithoutTeamDto playerDto){
+        if(playerService.updatePlayerPoint(playerDto)){
+            return ResponseEntity.status(HttpStatus.OK).body("Updated");
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong");
+    }
     @PutMapping("/team/update-team-name")
     public ResponseEntity<String>updateTeamName(@RequestBody TeamDtoWithoutPlayer team){
         if(teamService.updateTeamName(team)){

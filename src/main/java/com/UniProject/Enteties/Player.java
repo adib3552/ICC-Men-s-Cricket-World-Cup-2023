@@ -21,7 +21,6 @@ public class Player {
     @ManyToOne
     @JoinColumn(name = "Team_id")
     private Team team_name;
-
     @ManyToMany(mappedBy = "dream11")
     private List<User>dream11;
     private int wickets;

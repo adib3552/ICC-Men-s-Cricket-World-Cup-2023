@@ -6,6 +6,7 @@ import com.UniProject.Enteties.Player;
 import com.UniProject.Enteties.Team;
 import com.UniProject.Enteties.Venue;
 import com.UniProject.Repository.MatchRepository;
+import com.UniProject.Repository.PlayerRepository;
 import com.UniProject.Repository.TeamRepository;
 import com.UniProject.Repository.VenueRepository;
 import jakarta.transaction.Transactional;
@@ -25,6 +26,9 @@ public class MatchService {
 
     @Autowired
     private TeamRepository teamRepository;
+
+    @Autowired
+    private PlayerRepository playerRepository;
 
     @Autowired
     TeamService teamService;
@@ -57,6 +61,11 @@ public class MatchService {
             int tempScore=team.getScore();
             tempScore+=2;
             teamRepository.updateTeamScore(tempScore,team.getTid());
+            List<Player>players=playerRepository.getPlayersOfTeam(match.getWinning_team());
+            for(Player player:players){
+                int tempPoint=player.getPoints()+10;
+                playerRepository.updatePlayerPoints(tempPoint,player.getPid());
+            }
 
         }catch (Exception e){
             return false;

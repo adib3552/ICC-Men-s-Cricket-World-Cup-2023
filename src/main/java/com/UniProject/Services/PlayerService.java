@@ -71,6 +71,16 @@ public class PlayerService {
         }
         return true;
     }
+    @Transactional
+    public boolean updatePlayerPoint(PlayerWithoutTeamDto player){
+        try {
+            playerRepository.updatePlayerPoints(player.getPoints(), player.getPid());
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
     @Transactional
     public boolean deletePlayer(PlayerDto player){
