@@ -1,8 +1,6 @@
 package com.UniProject.Controller;
 
 import com.UniProject.DTO.*;
-import com.UniProject.Enteties.MatchInfo;
-import com.UniProject.Enteties.Team;
 import com.UniProject.ExternalApi.News;
 import com.UniProject.Services.MatchService;
 import com.UniProject.Services.PlayerService;

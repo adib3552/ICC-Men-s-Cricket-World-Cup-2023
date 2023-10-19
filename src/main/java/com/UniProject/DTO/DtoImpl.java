@@ -18,8 +18,9 @@ public class DtoImpl {
             matchDto1.setM_id(m.getM_id());
             matchDto1.setMatch_date_time(m.getMatch_date_time());
             matchDto1.setWinning_team(m.getWinning_team());
+            matchDto1.setTeam1(convertTeamDtoWithoutPlayerToDto(m.getTeam1()));
+            matchDto1.setTeam2(convertTeamDtoWithoutPlayerToDto(m.getTeam2()));
 
-            matchDto1.setTeamsPlaying(convertTeamListToDto(m.getTeamsPlaying()));
             matchDto1.setVenue(convertVenueToDto(m.getVenue()));
 
             matchDtoList.add(matchDto1);
@@ -53,13 +54,56 @@ public class DtoImpl {
                 team.getScore(),
                 convertPlayerWithoutTeamListToDto(team.getTeam_player()));
     }
+    public Player covertPlayerDtoWithoutTeamDtoToPlayer(PlayerWithoutTeamDto playerDto){
+        Player player=new Player();
+        player.setName(playerDto.getName());
+        player.setPoints(playerDto.getPoints());
+        player.setRole(playerDto.getRole());
+        player.setRuns(playerDto.getRuns());
+        player.setWickets(playerDto.getWickets());
+        player.setTname(playerDto.getTname());
+
+        return player;
+    }
+    public MatchInfo convertMatchDtoForInsert(MatchDtoForInsert matchDto){
+        MatchInfo matchInfo=new MatchInfo();
+        matchInfo.setMatch_date_time(matchDto.getMatch_date_time());
+
+        return matchInfo;
+    }
+    public PlayerDto covertPlayerDtoWithoutTeamDtoToPlayerDto(PlayerWithoutTeamDto playerDto){
+        PlayerDto player=new PlayerDto();
+        player.setName(playerDto.getName());
+        player.setPoints(playerDto.getPoints());
+        player.setRole(playerDto.getRole());
+        player.setRuns(playerDto.getRuns());
+        player.setWickets(playerDto.getWickets());
+
+
+        return player;
+    }
+    public Team convertTeamDtoWithoutPlayerToTeam(TeamDtoWithoutPlayer teamDto){
+        Team team=new Team();
+        team.setName(teamDto.getName());
+        team.setScore(teamDto.getScore());
+
+        return team;
+    }
     public VenueDto convertVenueToDto(Venue venue){
         VenueDto venueDto=new VenueDto();
         venueDto.setVid(venue.getVid());
         venueDto.setName(venue.getName());
-        venueDto.setStadium(venue.getStadium());
+        venueDto.setLocation(venue.getLocation());
 
         return venueDto;
+    }
+
+    public Venue covertVenueDtoToVenue(VenueDto venueDto){
+        Venue venue = new Venue();
+        venue.setName(venueDto.getName());
+        venue.setLocation(venueDto.getLocation());
+
+        return venue;
     }
     public List<PlayerDto>convertPlayerListToDto(List<Player>players){
         List<PlayerDto>playerDtoList=new ArrayList<>();
@@ -82,6 +126,7 @@ public class DtoImpl {
             playerDto.setName(player.getName());
             playerDto.setPid(player.getPid());
             playerDto.setRole(player.getRole());
+            playerDto.setTname(player.getTname());
 
             playerDtoList.add(playerDto);
         }

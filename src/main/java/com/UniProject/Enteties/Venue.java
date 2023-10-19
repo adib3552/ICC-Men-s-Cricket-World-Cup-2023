@@ -1,57 +1,23 @@
 package com.UniProject.Enteties;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @ToString
 public class Venue {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long vid;
     private String name;
-    private String Stadium;
-    @OneToOne(mappedBy = "venue")
-    @JoinColumn(name = "venue_id")
-    private MatchInfo matchId;
+    private String location;
+    @OneToMany(mappedBy = "venue",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<MatchInfo> matches;
 
-    public long getVid() {
-        return vid;
-    }
-
-    public void setVid(String vid) {
-        this.vid = Long.parseLong(vid);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public MatchInfo getMatchId() {
-        return matchId;
-    }
-
-    public void setMatchId(MatchInfo matchId) {
-        this.matchId = matchId;
-    }
-
-    public void setVid(long vid) {
-        this.vid = vid;
-    }
-
-    public String getStadium() {
-        return Stadium;
-    }
-
-    public void setStadium(String stadium) {
-        Stadium = stadium;
-    }
 }

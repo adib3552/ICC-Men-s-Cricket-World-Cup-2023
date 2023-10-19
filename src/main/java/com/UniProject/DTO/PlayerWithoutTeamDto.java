@@ -15,4 +15,5 @@ public class PlayerWithoutTeamDto {
     private int points;
     private int wickets;
     private String role;
+    private String tname;
 }
