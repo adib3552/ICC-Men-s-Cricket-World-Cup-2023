@@ -1,8 +1,10 @@
 package com.UniProject.Enteties;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,9 +23,10 @@ public class User {
     private String password;
     private long phone_no;
     private boolean isEnabled;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "dream11",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "player_id"))
-    private List<Player>dream11;
+    private List<Player>uDream11=new ArrayList<>();
+    private int dreamPoints;
 }

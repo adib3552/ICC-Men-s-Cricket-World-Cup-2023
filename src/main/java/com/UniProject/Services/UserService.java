@@ -1,18 +1,33 @@
 package com.UniProject.Services;
 
+import com.UniProject.DTO.DtoImpl;
+import com.UniProject.DTO.PlayerWithoutTeamDto;
+import com.UniProject.DTO.UserPlayer;
+import com.UniProject.Enteties.Player;
 import com.UniProject.Enteties.User;
+import com.UniProject.Repository.PlayerRepository;
 import com.UniProject.Repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @Component
 public class UserService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    EmailService emailService;
+    private PlayerRepository playerRepository;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    DtoImpl dto;
 
 
     public int saveUser(User user){
@@ -29,6 +44,32 @@ public class UserService {
         }
     }
 
+    public List<PlayerWithoutTeamDto>showPlayers(long uid){
+        List<PlayerWithoutTeamDto>players=new ArrayList<>();
+        List<Player>dream11=userRepository.getUserById(uid).getUDream11();
+        for(Player p:dream11){
+            players.add(dto.convertPlayerToPlayerWithoutTeamDto(p));
+        }
+        return players;
+    }
+    public UserPlayer showDreamPoint(long uid){
+        UserPlayer user=new UserPlayer();
+        user.setUid(uid);
+        user.setPoint(userRepository.getDreamPoint(uid));
+        return user;
+    }
+
+    @Transactional
+    public void updateDreamPoints(long uid){
+        List<Player>players=userRepository.getUserById(uid).getUDream11();
+        int dreamPoint=0;
+        for(Player p:players){
+            dreamPoint+=p.getPoints();
+        }
+        System.out.println(dreamPoint);
+        userRepository.updateDreamPoints(dreamPoint,uid);
+    }
+
     @Transactional
     public void verifyUser(String email){
          userRepository.updateUserEnable(email);
@@ -39,6 +80,17 @@ public class UserService {
 
     public User checkUser(String email,String pass){
         return userRepository.findByEmailAndPassword(email,pass);
+    }
+
+    @Transactional
+    public boolean addDreamPlayer(UserPlayer player){
+        try{
+            userRepository.addUserDream11(player.getPid(),player.getUid());
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     /**

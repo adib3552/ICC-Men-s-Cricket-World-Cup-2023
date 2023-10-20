@@ -1,20 +1,17 @@
 package com.UniProject.Services;
 
 import com.UniProject.DTO.*;
-import com.UniProject.Enteties.MatchInfo;
-import com.UniProject.Enteties.Player;
-import com.UniProject.Enteties.Team;
-import com.UniProject.Enteties.Venue;
-import com.UniProject.Repository.MatchRepository;
-import com.UniProject.Repository.PlayerRepository;
-import com.UniProject.Repository.TeamRepository;
-import com.UniProject.Repository.VenueRepository;
+import com.UniProject.Enteties.*;
+import com.UniProject.Repository.*;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class MatchService {
@@ -29,6 +26,15 @@ public class MatchService {
 
     @Autowired
     private PlayerRepository playerRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @PersistenceContext
+    EntityManager entityManager;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     TeamService teamService;
@@ -56,15 +62,22 @@ public class MatchService {
     @Transactional
     public boolean updateWinningTeam(Match match){
         try{
-            matchRepository.updateWinningTeam(match.getWinning_team(),match.getMid());
             Team team=teamRepository.findByName(match.getWinning_team());
             int tempScore=team.getScore();
             tempScore+=2;
+            matchRepository.updateWinningTeam(match.getWinning_team(),match.getMid());
             teamRepository.updateTeamScore(tempScore,team.getTid());
             List<Player>players=playerRepository.getPlayersOfTeam(match.getWinning_team());
             for(Player player:players){
                 int tempPoint=player.getPoints()+10;
                 playerRepository.updatePlayerPoints(tempPoint,player.getPid());
+                entityManager.refresh(player);
+            }
+            List<User>users= (List<User>) userRepository.findAll();
+
+            for(User user:users){
+                System.out.println(user.getFirst_name());
+                userService.updateDreamPoints(user.getId());
             }
 
         }catch (Exception e){

@@ -2,6 +2,7 @@ package com.UniProject.Repository;
 
 import com.UniProject.Enteties.Player;
 import com.UniProject.Enteties.Team;
+import com.UniProject.Enteties.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -13,6 +14,8 @@ import java.util.List;
 @Component
 public interface PlayerRepository extends CrudRepository<Player,Long> {
     Player findByName(String name);
+    @Query("select p from Player p where p.pid=:pid")
+    Player getPlayerById(@Param("pid") long pid);
     @Query("select p from Player p where p.tname=:team")
     List<Player>getPlayersOfTeam(@Param("team") String team);
 
@@ -28,6 +31,7 @@ public interface PlayerRepository extends CrudRepository<Player,Long> {
     @Modifying
     @Query("update Player p set p.points = :point where p.pid = :pid")
     void updatePlayerPoints(@Param("point") int point, @Param("pid") long pid);
+
 
 
     void deleteByPid(long pid);

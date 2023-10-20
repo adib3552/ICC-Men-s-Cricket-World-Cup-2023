@@ -161,4 +161,14 @@ public class DtoImpl {
         return teamDtoList;
     }
 
+    public PlayerWithoutTeamDto convertPlayerToPlayerWithoutTeamDto(Player player){
+        return new PlayerWithoutTeamDto(player.getPid(),
+                player.getName(),
+                player.getRuns(),
+                player.getPoints(),
+                player.getWickets(),
+                player.getRole(),
+                player.getTname());
+    }
+
 }

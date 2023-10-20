@@ -1,8 +1,10 @@
 package com.UniProject.Enteties;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,8 +23,8 @@ public class Player {
     @ManyToOne
     @JoinColumn(name = "Team_id")
     private Team team_name;
-    @ManyToMany(mappedBy = "dream11")
-    private List<User>dream11;
+    @ManyToMany(mappedBy = "uDream11")
+    private List<User>pDream11=new ArrayList<>();
     private int wickets;
     private String role;
     private String tname;
