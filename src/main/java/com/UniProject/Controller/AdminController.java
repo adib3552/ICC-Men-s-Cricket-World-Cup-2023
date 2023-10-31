@@ -14,8 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
@@ -33,6 +31,10 @@ public class AdminController {
     @Autowired
     VenueService venueService;
 
+    @GetMapping("/message")
+    public ResponseEntity<String>showMessage(){
+        return ResponseEntity.status(HttpStatus.OK).body("This is Admin page");
+    }
     @PostMapping("/player")
     public ResponseEntity<String>addPlayerInfo(@RequestBody PlayerWithoutTeamDto playerDto){
         Player player = playerService.addPlayer(playerDto);

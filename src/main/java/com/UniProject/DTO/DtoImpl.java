@@ -1,9 +1,6 @@
 package com.UniProject.DTO;
 
-import com.UniProject.Enteties.MatchInfo;
-import com.UniProject.Enteties.Player;
-import com.UniProject.Enteties.Team;
-import com.UniProject.Enteties.Venue;
+import com.UniProject.Enteties.*;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -169,6 +166,22 @@ public class DtoImpl {
                 player.getWickets(),
                 player.getRole(),
                 player.getTname());
+    }
+    public User UserDtoToUser(UserDto userDto){
+        User user=new User();
+
+        user.setEmail(userDto.getEmail());
+        user.setFirst_name(userDto.getFirst_name());
+        user.setLast_name(userDto.getLast_name());
+        user.setPassword(userDto.getPassword());
+        user.setPhone_no(userDto.getPhone_no());
+        user.setRole("USER");
+
+        return user;
+    }
+
+    public UserDto UserToUserDto(User user){
+        return new UserDto(user.getFirst_name(), user.getLast_name(), user.getEmail(),null,user.getPhone_no());
     }
 
 }

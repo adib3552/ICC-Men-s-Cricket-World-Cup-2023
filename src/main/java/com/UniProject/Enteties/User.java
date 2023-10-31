@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class User {
+public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -22,6 +22,7 @@ public class User {
     private String email;
     private String password;
     private long phone_no;
+    private String role;
     private boolean isEnabled;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "dream11",

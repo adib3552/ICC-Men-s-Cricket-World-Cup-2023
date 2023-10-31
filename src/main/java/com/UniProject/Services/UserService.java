@@ -2,6 +2,7 @@ package com.UniProject.Services;
 
 import com.UniProject.DTO.DtoImpl;
 import com.UniProject.DTO.PlayerWithoutTeamDto;
+import com.UniProject.DTO.UserDto;
 import com.UniProject.DTO.UserPlayer;
 import com.UniProject.Enteties.Player;
 import com.UniProject.Enteties.User;
@@ -27,11 +28,12 @@ public class UserService {
     private EmailService emailService;
 
     @Autowired
-    DtoImpl dto;
+    private DtoImpl dto;
 
 
-    public int saveUser(User user){
+    public int saveUser(UserDto userDto){
         try{
+            User user= dto.UserDtoToUser(userDto);
             User newUser=userRepository.save(user);
             if(newUser!=null){
                 return 1;//Success
@@ -74,8 +76,8 @@ public class UserService {
     public void verifyUser(String email){
          userRepository.updateUserEnable(email);
     }
-    public User getUser(String email){
-        return userRepository.findByEmail(email);
+    public UserDto getUser(String email){
+        return dto.UserToUserDto(userRepository.findByEmail(email));
     }
 
     public User checkUser(String email,String pass){
