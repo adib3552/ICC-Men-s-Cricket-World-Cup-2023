@@ -46,18 +46,24 @@ public class UserService {
         }
     }
 
-    public List<PlayerWithoutTeamDto>showPlayers(long uid){
+    public UserDto getUserById(long id){
+        return dto.UserToUserDto(userRepository.getUserById(id));
+    }
+
+    public List<PlayerWithoutTeamDto>showPlayers(String email){
         List<PlayerWithoutTeamDto>players=new ArrayList<>();
-        List<Player>dream11=userRepository.getUserById(uid).getUDream11();
+        List<Player>dream11=userRepository.findByEmail(email).getUDream11();
         for(Player p:dream11){
             players.add(dto.convertPlayerToPlayerWithoutTeamDto(p));
         }
         return players;
     }
-    public UserPlayer showDreamPoint(long uid){
+    public UserPlayer showDreamPoint(String email){
         UserPlayer user=new UserPlayer();
-        user.setUid(uid);
-        user.setPoint(userRepository.getDreamPoint(uid));
+        User tempUser=userRepository.findByEmail(email);
+        user.setUid(tempUser.getId());
+        user.setPoint(tempUser.getDreamPoints());
+
         return user;
     }
 
@@ -107,5 +113,10 @@ public class UserService {
     }
     public int getVerCode(String toEmail){
         return emailService.sendVerEmail(toEmail);
+    }
+
+
+    public String encodeEmail(String email) {
+        return email.replace("%40", "@");
     }
 }

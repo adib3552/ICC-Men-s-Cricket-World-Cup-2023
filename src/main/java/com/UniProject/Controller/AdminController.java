@@ -33,6 +33,7 @@ public class AdminController {
 
     @GetMapping("/message")
     public ResponseEntity<String>showMessage(){
+        System.out.println("hello");
         return ResponseEntity.status(HttpStatus.OK).body("This is Admin page");
     }
     @PostMapping("/player")

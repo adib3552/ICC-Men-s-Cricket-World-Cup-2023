@@ -38,7 +38,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         System.out.println(authHeader);
 
         if(StringUtils.isEmpty(authHeader) || !org.apache.commons.lang3.StringUtils.startsWith(authHeader,"Bearer")){
-            System.out.println("in");
+            System.out.println("fail");
+            System.out.println("head"+authHeader);
+            System.out.println(org.apache.commons.lang3.StringUtils.startsWith(authHeader,"Bearer"));
             filterChain.doFilter(request,response);
             return;
         }
@@ -56,6 +58,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         userDetails,null,userDetails.getAuthorities()
                 );
                 token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                request.setAttribute("email",userEmail);
 
                 securityContext.setAuthentication(token);
                 SecurityContextHolder.setContext(securityContext);

@@ -16,8 +16,8 @@ public interface UserRepository extends CrudRepository<User,Long> {
     User findByEmailAndPassword(String email, String password);
     @Query("select u from User u where u.id=:uid")
     User getUserById(@Param("uid") long uid);
-    @Query("select u.dreamPoints from User u where u.id=:uid")
-    int getDreamPoint(@Param("uid") long uid);
+    @Query("select u.dreamPoints from User u where u.email=:email")
+    int getDreamPoint(@Param("email")String email);
     @Modifying
     @Query("Update User u set u.isEnabled=true where u.email=:email")
     void updateUserEnable(@Param("email") String email);

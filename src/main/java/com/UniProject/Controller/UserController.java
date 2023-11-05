@@ -2,7 +2,9 @@ package com.UniProject.Controller;
 
 import com.UniProject.DTO.*;
 import com.UniProject.Services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,22 +23,25 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("This is for User");
     }
 
-    @GetMapping("/profile/{email}")
-    public UserDto getUser(@PathVariable("email") String email){
-        return userService.getUser(email);
+    @GetMapping("/profile")
+    public UserDto getUser(HttpServletRequest request){
+        String userEmail= (String) request.getAttribute("email");
+        return userService.getUser(userEmail);
     }
 
-    @GetMapping("/show-dPlayer/{uid}")
-    public List<PlayerWithoutTeamDto>showDream11Players(@PathVariable("uid") long uid){
-        return userService.showPlayers(uid);
+    @GetMapping("/show-dPlayer")
+    public List<PlayerWithoutTeamDto>showDream11Players(HttpServletRequest request){
+        String email= (String) request.getAttribute("email");
+        return userService.showPlayers(email);
     }
-    @GetMapping("/show-Point/{uid}")
-    public UserPlayer showDreamPoint(@PathVariable("uid") long uid){
-        return userService.showDreamPoint(uid);
+    @GetMapping("/show-Point")
+    public UserPlayer showDreamPoint(HttpServletRequest request){
+        String email= (String) request.getAttribute("email");
+        return userService.showDreamPoint(email);
     }
 
     @PutMapping("/dPlayer")
-    public ResponseEntity<String>addDreamPlayer(@RequestBody UserPlayer player){
+    public ResponseEntity<String>addDreamPlayer(@RequestBody UserPlayer player){ // add pid only
         if(userService.addDreamPlayer(player)){
             return ResponseEntity.status(HttpStatus.OK).body("Player added to dream team");
         }

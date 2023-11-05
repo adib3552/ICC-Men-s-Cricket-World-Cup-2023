@@ -170,6 +170,7 @@ public class DtoImpl {
     public User UserDtoToUser(UserDto userDto){
         User user=new User();
 
+        user.setId(user.getId());
         user.setEmail(userDto.getEmail());
         user.setFirst_name(userDto.getFirst_name());
         user.setLast_name(userDto.getLast_name());
@@ -181,7 +182,7 @@ public class DtoImpl {
     }
 
     public UserDto UserToUserDto(User user){
-        return new UserDto(user.getFirst_name(), user.getLast_name(), user.getEmail(),null,user.getPhone_no());
+        return new UserDto(user.getId(), user.getFirst_name(), user.getLast_name(), user.getEmail(),null,user.getPhone_no());
     }
 
 }
